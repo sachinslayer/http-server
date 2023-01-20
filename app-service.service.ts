@@ -1,26 +1,22 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {Observable, throwError} from 'rxjs';
+import { Observable, throwError} from 'rxjs';
 import {catchError } from 'rxjs/operators'
-
-
+import { HttpErrorResponse } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
-export class AppServiceService {
- 
-  
-  
+export class AppServiceService { 
   
   constructor (private http: HttpClient){}
-  getData():Observable<any>{
-    const url="https://api.github.com/users"
-    return this.http.get<any>(url)
-                       .pipe(catchError(this.handleError))
+  getConfig():Observable<any> {
+    return this.http.get<any>("https://api.publicapis.org/entriesd")
+      .pipe(
+        catchError(this.handleError)
+      )
   }
-  handleError(error:any) {
+  handleError(error:HttpErrorResponse){
     return throwError(error.message || "server Error")
   }
-  
 
 }

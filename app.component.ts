@@ -8,20 +8,15 @@ import { AppServiceService } from './app-service.service';
 export class AppComponent {
   title = 'work';
   error:any
-  data :any
-  constructor (private appService: AppServiceService){}
-  dataGet(){
-    this.appService.getData().subscribe((data)=>{
-      console.log(data)
-      this.data=data
-    
-
-    },(error)=> {
-      console.log(error)
-      this.error=error
-
-    })
-    
-  }
+  errorMessage="Loading.."
+ constructor(private appService:AppServiceService) {}  
+ 
+ ngOnInit(){
+  this.appService.getConfig().subscribe((data)=>{
+    this.error=this.error;
+  },
+  (err)=>{this.errorMessage="wrong url"
+  });
+ }
 
 }
